@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soirée jeux — Le tirage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="site-nav__mark">Soirée jeux <em>&amp;</em> compagnie</div>
+  <div class="site-nav__links">
+    <a href="index.html" aria-current="page">Le tirage</a>
+    <a href="scores.html">Le registre</a>
+  </div>
+</nav>
+
+<main>
+  <p class="eyebrow">Dossier n° 01 — Sélection du soir</p>
+  <h1 class="page-title">On joue à quoi,<br>ce soir ?</h1>
+  <p class="page-intro">
+    Un tirage, une chaîne de fiches : le jeu d'abord, puis chacun de ses réglages
+    piochés au même sort. Une fois le dossier complet, il est classé automatiquement —
+    il ne restera qu'à noter le résultat dans le registre après la partie.
+  </p>
+
+  <div class="board">
+    <div class="draw-action">
+      <button class="btn btn--solid" id="drawBtn" type="button">Tirer la soirée</button>
+      <span class="draw-status" id="drawStatus">En attente du tirage.</span>
+    </div>
+
+    <ul class="chain" id="chain"></ul>
+
+    <div class="result-summary" id="resultSummary" hidden></div>
+  </div>
+</main>
+
+<script src="js/games-config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/roulette.js"></script>
+</body>
+</html>
