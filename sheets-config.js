@@ -9,4 +9,4 @@
    d'explication à la place des statistiques — rien ne casse.
    ============================================================================ */
 
-const SHEET_WEBAPP_URL = "COLLEZ_ICI_VOTRE_URL_DE_DEPLOIEMENT";
+const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz3x6uMsY_daOkFoCvDqocOfk2P2tFXPkm-3FaZgGjCYp4kUqaGmPgWI_rOJVnXaj1LxA/exec";
