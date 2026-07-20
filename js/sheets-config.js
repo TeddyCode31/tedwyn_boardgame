@@ -9,4 +9,4 @@
    d'explication à la place des statistiques — rien ne casse.
    ============================================================================ */
 
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz3x6uMsY_daOkFoCvDqocOfk2P2tFXPkm-3FaZgGjCYp4kUqaGmPgWI_rOJVnXaj1LxA/exec";
+const SHEET_WEBAPP_URL = "https://script.google.com/macros/library/d/1OetdYsdHjot-j1xyHS8kdOk20R3BErZUAyv52whjpzbeLQaYg8jSW2TW/1";
