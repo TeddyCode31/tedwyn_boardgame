@@ -13,7 +13,10 @@ function isSheetConfigured() {
 
 async function fetchMatchesFromSheet() {
   const res = await fetch(SHEET_WEBAPP_URL, { method: "GET" });
-  if (!res.ok) throw new Error("Le Google Sheet n'a pas répondu correctement.");
+  if (!res.ok) {
+    const body = await safeText(res);
+    throw new Error(`Le Google Sheet a répondu avec une erreur (statut ${res.status}). ${body}`);
+  }
   return res.json();
 }
 
@@ -25,6 +28,19 @@ async function postMatchToSheet(match) {
     headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(match)
   });
-  if (!res.ok) throw new Error("L'enregistrement dans le Google Sheet a échoué.");
+  if (!res.ok) {
+    const body = await safeText(res);
+    throw new Error(`Le Google Sheet a refusé l'écriture (statut ${res.status}). ${body}`);
+  }
   return res.json();
+}
+
+async function safeText(res) {
+  try {
+    const t = await res.text();
+    // Google renvoie parfois une page HTML d'erreur : on la raccourcit
+    return t.replace(/\s+/g, " ").slice(0, 180);
+  } catch {
+    return "";
+  }
 }
