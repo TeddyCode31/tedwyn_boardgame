@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soirée jeux — Le registre</title>
+<title>Tedwyn &amp; Emmalyn · Registre</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,86 +12,100 @@
 <body>
 
 <nav class="site-nav">
-  <div class="site-nav__mark">Soirée jeux <em>&amp;</em> compagnie</div>
+  <div class="site-nav__mark">Tedwyn <em>&amp;</em> Emmalyn</div>
   <div class="site-nav__links">
     <a href="index.html">Le tirage</a>
     <a href="scores.html" aria-current="page">Le registre</a>
   </div>
 </nav>
 
+<div class="title-card">
+  <span class="title-card__rule"></span>
+  <span class="title-card__names">Le registre</span>
+  <span class="title-card__rule"></span>
+</div>
+
 <main>
-  <p class="eyebrow">Dossier n° 02 — Registre des parties</p>
+  <p class="eyebrow">Archives du grand tournoi Bubu &amp; Dudu</p>
   <h1 class="page-title">Qui a gagné,<br>combien de fois ?</h1>
   <p class="page-intro">
     Après une partie, un seul geste : cliquer sur le nom du vainqueur. Le tirage
-    du soir est classé automatiquement dans le registre, saison en cours.
+    du soir est classé automatiquement dans le registre, avec la saison de votre choix.
   </p>
 
   <div id="pendingHost"></div>
 
-  <div class="ledger ledger--book">
-    <div class="season-tabs" id="seasonTabs"></div>
+  <div class="content-frame">
+    <span class="content-frame__tick content-frame__tick--tl"></span>
+    <span class="content-frame__tick content-frame__tick--tr"></span>
+    <span class="content-frame__tick content-frame__tick--bl"></span>
+    <span class="content-frame__tick content-frame__tick--br"></span>
 
-    <p class="eyebrow" style="margin-bottom:2px;">Total des parties : <span id="totalGames">0</span></p>
+    <div class="ledger ledger--book">
+      <div class="draw-action" style="margin-bottom:6px;">
+        <div class="season-tabs" id="seasonTabs" style="margin-bottom:0;"></div>
+        <button class="btn btn--ghost" id="refreshBtn" type="button" style="padding:8px 14px;font-size:0.68rem;">↻ Actualiser</button>
+      </div>
+      <p class="sheet-status" id="sheetStatus"></p>
 
-    <div class="score-grid" id="scoreTotals"></div>
+      <p class="eyebrow" style="margin-bottom:2px;">Total des parties : <span id="totalGames">0</span></p>
 
-    <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:34px 0 14px;">Victoires par jeu</h2>
-    <div id="gameBars"></div>
+      <div class="score-grid" id="scoreTotals"></div>
 
-    <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:34px 0 14px;">Journal des parties</h2>
-    <table class="match-table">
-      <thead>
-        <tr><th>Date</th><th>Jeu</th><th>Vainqueur</th><th>Paramètres</th><th></th></tr>
-      </thead>
-      <tbody id="matchTableBody"></tbody>
-    </table>
+      <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:34px 0 14px;">Victoires par jeu</h2>
+      <div id="gameBars"></div>
 
-    <details class="manual-entry">
-      <summary>+ Saisir une partie manuellement (rattrapage, ancienne saison…)</summary>
-      <form class="manual-form" id="manualForm">
-        <label>Date
-          <input type="date" name="manualDate" required>
-        </label>
-        <label>Jeu
-          <select name="manualGame" id="manualGame" required></select>
-        </label>
-        <label>Saison
-          <select name="manualSeason" id="manualSeason" required></select>
-        </label>
-        <label>Vainqueur
-          <select name="manualWinner" required>
-            <option value="p1">Moi</option>
-            <option value="p2">Ma compagne</option>
-          </select>
-        </label>
-        <label class="full" style="flex-direction:row;align-items:center;gap:8px;">
-          <input type="checkbox" name="manualNoData" id="manualNoData" checked style="width:auto;">
-          <span style="text-transform:none;letter-spacing:normal;font-size:0.85rem;">Paramètres inconnus (no data)</span>
-        </label>
-        <label class="full">Paramètres (optionnel, si connus)
-          <input type="text" name="manualParamsNote" placeholder="ex : Pearlbrook, Bellfaire">
-        </label>
-        <div class="full">
-          <button class="btn btn--solid" type="submit">Ajouter au registre</button>
-          <span class="feedback-msg" id="manualFeedback"></span>
-        </div>
-      </form>
-    </details>
-  </div>
+      <h2 style="font-family:var(--font-display);font-size:1.15rem;margin:34px 0 14px;">Journal des parties</h2>
+      <table class="match-table">
+        <thead>
+          <tr><th>Date</th><th>Jeu</th><th>Vainqueur</th><th>Paramètres</th></tr>
+        </thead>
+        <tbody id="matchTableBody"></tbody>
+      </table>
+      <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--ink-soft);margin-top:10px;">
+        Pour corriger ou supprimer une ligne, modifiez-la directement dans le Google Sheet — c'est lui la source de vérité.
+      </p>
 
-  <div class="backup-row">
-    <button class="btn btn--ghost" id="exportBtn" type="button">Exporter une sauvegarde</button>
-    <label class="btn btn--ghost" style="cursor:pointer;">
-      Importer une sauvegarde
-      <input type="file" id="importInput" accept="application/json" style="display:none;">
-    </label>
-    <span class="feedback-msg" id="backupFeedback"></span>
+      <details class="manual-entry">
+        <summary>+ Saisir une partie manuellement (rattrapage, ancienne saison…)</summary>
+        <form class="manual-form" id="manualForm">
+          <label>Date
+            <input type="date" name="manualDate" required>
+          </label>
+          <label>Jeu
+            <select name="manualGame" id="manualGame" required></select>
+          </label>
+          <label>Saison
+            <input type="text" name="manualSeason" id="manualSeason" required>
+          </label>
+          <label>Vainqueur
+            <select name="manualWinner" id="manualWinner" required></select>
+          </label>
+          <label class="full" style="flex-direction:row;align-items:center;gap:8px;">
+            <input type="checkbox" name="manualNoData" id="manualNoData" checked style="width:auto;">
+            <span style="text-transform:none;letter-spacing:normal;font-size:0.85rem;">Paramètres inconnus (no data)</span>
+          </label>
+          <label class="full">Paramètres (optionnel, si connus)
+            <input type="text" name="manualParamsNote" placeholder="ex : Pearlbrook, Bellfaire">
+          </label>
+          <div class="full">
+            <button class="btn btn--solid" type="submit">Ajouter au registre</button>
+            <span class="feedback-msg" id="manualFeedback"></span>
+          </div>
+        </form>
+      </details>
+    </div>
   </div>
 </main>
 
+<audio id="bgMusic" src="audio/theme.mp3" loop preload="none"></audio>
+<button class="music-btn" id="musicResume" type="button" hidden>♪ Reprendre la musique</button>
+
 <script src="js/games-config.js"></script>
 <script src="js/storage.js"></script>
+<script src="js/sheets-config.js"></script>
+<script src="js/sheets.js"></script>
+<script src="js/music.js"></script>
 <script src="js/dashboard.js"></script>
 </body>
 </html>

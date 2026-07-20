@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soirée jeux — Le tirage</title>
+<title>Tedwyn &amp; Emmalyn · Tirage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,15 +12,21 @@
 <body>
 
 <nav class="site-nav">
-  <div class="site-nav__mark">Soirée jeux <em>&amp;</em> compagnie</div>
+  <div class="site-nav__mark">Tedwyn <em>&amp;</em> Emmalyn</div>
   <div class="site-nav__links">
     <a href="index.html" aria-current="page">Le tirage</a>
     <a href="scores.html">Le registre</a>
   </div>
 </nav>
 
+<div class="title-card">
+  <span class="title-card__rule"></span>
+  <span class="title-card__names">Tirage du soir</span>
+  <span class="title-card__rule"></span>
+</div>
+
 <main>
-  <p class="eyebrow">Dossier n° 01 — Sélection du soir</p>
+  <p class="eyebrow">Sélection pour le grand tournoi Bubu &amp; Dudu</p>
   <h1 class="page-title">On joue à quoi,<br>ce soir ?</h1>
   <p class="page-intro">
     Un tirage, une chaîne de fiches : le jeu d'abord, puis chacun de ses réglages
@@ -28,20 +34,31 @@
     il ne restera qu'à noter le résultat dans le registre après la partie.
   </p>
 
-  <div class="board">
-    <div class="draw-action">
-      <button class="btn btn--solid" id="drawBtn" type="button">Tirer la soirée</button>
-      <span class="draw-status" id="drawStatus">En attente du tirage.</span>
+  <div class="content-frame">
+    <span class="content-frame__tick content-frame__tick--tl"></span>
+    <span class="content-frame__tick content-frame__tick--tr"></span>
+    <span class="content-frame__tick content-frame__tick--bl"></span>
+    <span class="content-frame__tick content-frame__tick--br"></span>
+
+    <div class="board">
+      <div class="draw-action">
+        <button class="btn btn--solid" id="drawBtn" type="button">Tirer la soirée</button>
+        <span class="draw-status" id="drawStatus">En attente du tirage.</span>
+      </div>
+
+      <ul class="chain" id="chain"></ul>
+
+      <div class="result-summary" id="resultSummary" hidden></div>
     </div>
-
-    <ul class="chain" id="chain"></ul>
-
-    <div class="result-summary" id="resultSummary" hidden></div>
   </div>
 </main>
 
+<audio id="bgMusic" src="audio/theme.mp3" loop preload="none"></audio>
+<button class="music-btn" id="musicResume" type="button" hidden>♪ Reprendre la musique</button>
+
 <script src="js/games-config.js"></script>
 <script src="js/storage.js"></script>
+<script src="js/music.js"></script>
 <script src="js/roulette.js"></script>
 </body>
 </html>

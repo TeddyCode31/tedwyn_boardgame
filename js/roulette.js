@@ -1,11 +1,11 @@
 /* ============================================================================
    TIRAGE — page index.html
    ============================================================================
-   Principe : au clic sur "Tirer la soirée", on construit une chaîne de fiches
-   (le jeu, puis chacun de ses paramètres) et on les fait défiler une par une,
-   comme une fiche que l'on pioche dans un tiroir, avant de se figer sur le
-   résultat. Le tirage final est enregistré automatiquement dans le navigateur
-   (aucune action supplémentaire nécessaire) pour être récupéré sur la page
+   Un seul bouton pilote tout : "Tirer la soirée" puis "Retirer le tirage".
+   Au clic, on construit une chaîne de fiches (le jeu, puis chacun de ses
+   paramètres) et on les fait défiler une par une avant de se figer sur le
+   résultat. Le tirage final est enregistré automatiquement dans le
+   navigateur (aucune action supplémentaire) pour être récupéré sur la page
    Registre.
    ============================================================================ */
 
@@ -15,6 +15,7 @@ const drawStatus = document.getElementById("drawStatus");
 const summarySection = document.getElementById("resultSummary");
 
 let isDrawing = false;
+let hasDrawnOnce = false;
 
 drawBtn.addEventListener("click", startDraw);
 
@@ -26,6 +27,8 @@ function startDraw() {
   summarySection.hidden = true;
   summarySection.innerHTML = "";
   chainEl.innerHTML = "";
+
+  startMusic();
 
   // 1. On choisit le jeu au hasard, probabilité égale entre tous les jeux
   const game = GAMES[Math.floor(Math.random() * GAMES.length)];
@@ -48,7 +51,8 @@ function startDraw() {
   runSequence(steps, cardEls, 0, () => {
     isDrawing = false;
     drawBtn.disabled = false;
-    drawBtn.textContent = "Retirer la soirée";
+    drawBtn.textContent = hasDrawnOnce ? "Retirer le tirage" : "Retirer le tirage";
+    hasDrawnOnce = true;
     drawStatus.textContent = "Tirage enregistré — direction le registre pour noter le résultat.";
     showSummary(game, steps);
     savePendingDrawFromSteps(game, steps);
@@ -81,7 +85,7 @@ function createChainItem(step, index) {
 function runSequence(steps, cardEls, i, onFinished) {
   if (i >= steps.length) { onFinished(); return; }
   const step = steps[i];
-  const { li } = { li: chainEl.children[i] };
+  const li = chainEl.children[i];
   li.dataset.state = "active";
   const titleEl = cardEls[i].titleEl;
 
@@ -102,7 +106,6 @@ function cycleThenLand(titleEl, candidates, finalValue, onLanded) {
   function tick(now) {
     const elapsed = now - start;
     const progress = Math.min(elapsed / totalDuration, 1);
-    // délai croissant entre deux changements (accélère puis ralentit)
     const interval = 45 + Math.pow(progress, 2) * 220;
 
     if (now - lastTick > interval) {
@@ -131,9 +134,11 @@ function showSummary(game, steps) {
   summarySection.hidden = false;
   summarySection.innerHTML = `
     <div class="result-summary__photo">
-      <img class="game-photo" alt="${game.name}"
-           src="images/games/${game.id}.jpg"
-           onerror="this.onerror=null;this.src='images/games/_placeholder.svg';">
+      <div class="stamp-frame">
+        <img class="game-photo" alt="${game.name}" id="resultPhoto"
+             src="images/games/${game.id}.jpg"
+             onerror="this.onerror=null;this.src='images/games/_placeholder.svg';">
+      </div>
     </div>
     <div class="result-summary__body">
       <p class="index-card__eyebrow">Ce soir, on joue à</p>
@@ -144,11 +149,14 @@ function showSummary(game, steps) {
       <div class="stamp">Tirage enregistré</div>
       <div class="result-actions">
         <a class="btn btn--solid" href="scores.html">Aller au registre →</a>
-        <button class="btn btn--ghost" id="redrawBtn" type="button">Retirer</button>
       </div>
     </div>
   `;
-  document.getElementById("redrawBtn").addEventListener("click", startDraw);
+
+  // Petite animation façon Polaroid qui se révèle
+  requestAnimationFrame(() => {
+    document.getElementById("resultPhoto").classList.add("is-developing");
+  });
 }
 
 function savePendingDrawFromSteps(game, steps) {
