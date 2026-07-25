@@ -41,6 +41,14 @@
     <span class="content-frame__tick content-frame__tick--br"></span>
 
     <div class="board">
+      <p class="index-card__eyebrow" style="color:rgba(242,233,211,0.55);margin-bottom:10px;">Durée souhaitée (optionnel)</p>
+      <div class="duration-filter" id="durationFilter">
+        <button data-duration="all" class="is-active" type="button">Tous</button>
+        <button data-duration="fast" type="button">Fast</button>
+        <button data-duration="mid" type="button">Mid</button>
+        <button data-duration="big" type="button">Big</button>
+      </div>
+
       <div class="draw-action">
         <button class="btn btn--solid" id="drawBtn" type="button">Tirer la soirée</button>
         <span class="draw-status" id="drawStatus">En attente du tirage.</span>
