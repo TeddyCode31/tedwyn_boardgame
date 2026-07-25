@@ -147,7 +147,7 @@ const GAMES = [
   },
   {
     id: "aventuriers-du-rail-europe",
-    duration: "mid",
+    duration: "big",
     name: "Les Aventuriers du Rail Europe (Big Cities)",
     parameters: []
   }
