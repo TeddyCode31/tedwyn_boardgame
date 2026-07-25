@@ -286,6 +286,31 @@ h1.page-title{
   flex-wrap: wrap;
   margin-bottom: 36px;
 }
+.duration-filter{
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.duration-filter button{
+  background: transparent;
+  border: 1px solid rgba(242,233,211,0.28);
+  color: rgba(242,233,211,0.6);
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor:pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.duration-filter button:hover{ border-color: var(--brass); color: var(--card); }
+.duration-filter button.is-active{
+  background: var(--brass);
+  color: var(--felt-dark);
+  border-color: var(--brass);
+}
 .draw-status{
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -449,25 +474,12 @@ h1.page-title{
   padding: clamp(20px, 4vw, 36px);
   position: relative;
 }
-.ledger::before{
-  /* reliure au centre */
-  content:"";
-  position:absolute;
-  top:0; bottom:0; left:50%;
-  width:1px;
-  background: repeating-linear-gradient(to bottom, var(--card-edge) 0 4px, transparent 4px 9px);
-  opacity: 0.9;
-  display: none;
-}
-@media(min-width: 760px){
-  .ledger--book::before{ display:block; }
-}
 
 .season-tabs{
   display:flex;
-  gap:6px;
+  gap:8px;
   flex-wrap: wrap;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.06em;
@@ -475,16 +487,18 @@ h1.page-title{
 }
 .season-tabs button{
   background: transparent;
-  border: 1px solid rgba(242,233,211,0.25);
-  color: rgba(242,233,211,0.6);
+  border: 1px solid var(--ink-soft);
+  color: var(--ink-soft);
   padding: 8px 14px;
-  border-radius: 999px 999px 0 0;
+  border-radius: 999px;
   cursor:pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
 }
+.season-tabs button:hover{ border-color: var(--brick); color: var(--brick); }
 .season-tabs button.is-active{
-  background: var(--card);
-  color: var(--ink);
-  border-color: var(--card);
+  background: var(--brick);
+  color: var(--card);
+  border-color: var(--brick);
 }
 
 .score-grid{
