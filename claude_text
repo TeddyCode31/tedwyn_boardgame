@@ -1,0 +1,46 @@
+Pour ajouter un jeu ou modifier ses paramètres
+
+Un seul fichier : js/games-config.js. C'est le seul endroit à toucher, rien d'autre à modifier ailleurs dans le code.
+
+Pour modifier un jeu existant (ex. changer sa durée) : trouvez son bloc, changez la ligne concernée.
+
+js
+{
+  id: "everdell",
+  duration: "big",        // ← changez ici : "fast", "mid" ou "big"
+  name: "Everdell",
+  parameters: [ ... ]
+}
+
+Pour ajouter un nouveau jeu : copiez un bloc entier depuis un jeu existant, collez-le juste avant ou après (avec une virgule entre les deux blocs), et changez les valeurs :
+
+js
+{
+  id: "mon-nouveau-jeu",      // sans accent ni espace, avec des tirets
+  duration: "mid",            // "fast", "mid" ou "big"
+  name: "Mon Nouveau Jeu",    // nom affiché, accents/espaces OK ici
+  parameters: [
+    {
+      id: "extension_x",
+      label: "Extension X",
+      type: "boolean"          // Oui/Non, 50/50
+    },
+    {
+      id: "mode_de_jeu",
+      label: "Mode de jeu",
+      type: "choice",          // probabilité égale entre les options
+      options: ["Mode A", "Mode B", "Mode C"]
+    }
+  ]
+}
+type: "boolean" → tirage Oui/Non à 50/50
+type: "choice" → tirage à égalité entre toutes les valeurs de options
+Un jeu sans réglage particulier : parameters: []
+
+N'oubliez pas d'ajouter la photo correspondante dans images/games/mon-nouveau-jeu.jpg (voir images/games/README.md).
+
+Pour les saisons
+
+Automatique, rien à créer. Les onglets de saison sur la page Registre sont générés à partir des valeurs trouvées dans la colonne "Saison" du Google Sheet — dès qu'une partie est enregistrée avec un nouveau numéro (que ce soit via le site, ou en tapant directement une ligne dans le Sheet), l'onglet correspondant apparaît tout seul au prochain chargement de la page (ou en cliquant sur "Actualiser").
+
+Concrètement, pour démarrer une saison 3 : changez simplement le chiffre dans le petit champ "Saison" à côté des boutons de victoire (ou dans le formulaire manuel) — la nouvelle saison est créée de fait, sans bouton "nouvelle saison" à chercher.
