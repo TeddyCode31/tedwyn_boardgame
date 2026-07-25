@@ -23,6 +23,13 @@
 
    3. Un jeu sans paramètre a simplement : parameters: []
 
+   4. Chaque jeu a aussi un champ "duration" qui sert au filtre "Fast / Mid / Big"
+      affiché avant le tirage. Valeurs possibles : "fast", "mid", "big".
+      -> ⚠️ Duel Seigneur des Anneaux, Harmonies, Parks, Lueur et Les Aventuriers
+         du Rail Europe sont réglés sur "mid" par défaut car vous ne m'avez pas
+         précisé leur catégorie — changez simplement la valeur ci-dessous pour
+         chacun si besoin (aucun autre fichier à toucher).
+
    Pour ajouter un jeu, copiez un bloc { ... } ci-dessous, changez les valeurs,
    et ajoutez une virgule avant le bloc suivant. Rien d'autre à toucher.
    ============================================================================ */
@@ -30,6 +37,7 @@
 const GAMES = [
   {
     id: "everdell",
+    duration: "big",
     name: "Everdell",
     parameters: [
       {
@@ -62,16 +70,19 @@ const GAMES = [
   },
   {
     id: "inis",
+    duration: "big",
     name: "Inis",
     parameters: []
   },
   {
     id: "duel-seigneur-des-anneaux",
+    duration: "mid",
     name: "Duel : Seigneur des Anneaux",
     parameters: []
   },
   {
     id: "harmonies",
+    duration: "mid",
     name: "Harmonies",
     parameters: [
       {
@@ -84,6 +95,7 @@ const GAMES = [
   },
   {
     id: "parks",
+    duration: "mid",
     name: "Parks",
     parameters: [
       { id: "nightfall", label: "Extension Nightfall", type: "boolean" },
@@ -92,16 +104,19 @@ const GAMES = [
   },
   {
     id: "living-forest",
+    duration: "big",
     name: "Living Forest",
     parameters: []
   },
   {
     id: "sea-salt-and-pepper",
+    duration: "fast",
     name: "Sea Salt and Pepper",
     parameters: []
   },
   {
     id: "duel-pour-cardia",
+    duration: "fast",
     name: "Duel pour Cardia",
     parameters: [
       {
@@ -119,6 +134,7 @@ const GAMES = [
   },
   {
     id: "lueur",
+    duration: "mid",
     name: "Lueur",
     parameters: [
       {
@@ -131,6 +147,7 @@ const GAMES = [
   },
   {
     id: "aventuriers-du-rail-europe",
+    duration: "mid",
     name: "Les Aventuriers du Rail Europe (Big Cities)",
     parameters: []
   }

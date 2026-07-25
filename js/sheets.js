@@ -21,18 +21,21 @@ async function fetchMatchesFromSheet() {
 }
 
 async function postMatchToSheet(match) {
-  // Content-Type "text/plain" évite la requête de pré-vol CORS que
-  // Google Apps Script ne sait pas toujours gérer.
-  const res = await fetch(SHEET_WEBAPP_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(match)
-  });
-  if (!res.ok) {
-    const body = await safeText(res);
-    throw new Error(`Le Google Sheet a refusé l'écriture (statut ${res.status}). ${body}`);
+  // Sur l'écriture, Google Apps Script ne renvoie pas toujours les en-têtes
+  // CORS attendus par le navigateur, ce qui provoque un "Failed to fetch"
+  // même quand l'enregistrement a réussi côté serveur. On envoie donc la
+  // requête en mode "no-cors" (réponse illisible, mais l'écriture passe),
+  // et c'est la relecture (GET) juste après qui confirme que ça a marché.
+  try {
+    await fetch(SHEET_WEBAPP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(match)
+    });
+  } catch (err) {
+    throw new Error("La requête n'a pas pu être envoyée (réseau, ou URL de déploiement incorrecte). " + err.message);
   }
-  return res.json();
 }
 
 async function safeText(res) {

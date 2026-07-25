@@ -16,11 +16,27 @@ const summarySection = document.getElementById("resultSummary");
 
 let isDrawing = false;
 let hasDrawnOnce = false;
+let selectedDuration = "all";
+
+const durationFilterEl = document.getElementById("durationFilter");
+durationFilterEl.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    selectedDuration = btn.dataset.duration;
+    durationFilterEl.querySelectorAll("button").forEach(b => b.classList.toggle("is-active", b === btn));
+  });
+});
 
 drawBtn.addEventListener("click", startDraw);
 
 function startDraw() {
   if (isDrawing) return;
+
+  const pool = selectedDuration === "all" ? GAMES : GAMES.filter(g => g.duration === selectedDuration);
+  if (!pool.length) {
+    drawStatus.textContent = "Aucun jeu ne correspond à ce filtre pour l'instant.";
+    return;
+  }
+
   isDrawing = true;
   drawBtn.disabled = true;
   drawStatus.textContent = "Tirage en cours…";
@@ -30,12 +46,12 @@ function startDraw() {
 
   startMusic();
 
-  // 1. On choisit le jeu au hasard, probabilité égale entre tous les jeux
-  const game = GAMES[Math.floor(Math.random() * GAMES.length)];
+  // 1. On choisit le jeu au hasard, probabilité égale entre tous les jeux du filtre
+  const game = pool[Math.floor(Math.random() * pool.length)];
 
   // 2. On construit la liste des tirages à effectuer : le jeu, puis chaque paramètre
   const steps = [
-    { kind: "game", label: "Le jeu de ce soir", candidates: GAMES.map(g => g.name), result: game.name }
+    { kind: "game", label: "Le jeu de ce soir", candidates: pool.map(g => g.name), result: game.name }
   ];
   game.parameters.forEach(param => {
     const candidates = param.type === "boolean" ? ["Oui", "Non"] : param.options;
